@@ -12,6 +12,9 @@ export default class Courses extends Component {
     }
   }
   
+
+  // Courses details fetched when component mounts
+  
   componentDidMount() {
     this.data.getCourses().then(courses => {
       this.setState(() => {

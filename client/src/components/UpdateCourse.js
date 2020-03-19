@@ -14,21 +14,29 @@ export default class CourseDetail extends Component {
     }
   }
   
+  // Getting the the course details for the update
   componentDidMount() {
     const { context } = this.props;
-    context.data.getSingleCourse(this.props.match.params.id).then(course => {
-      this.setState(() => {
-        return course[0];
-      });
-    }).catch((err) => {
-      this.setState(() => {
-        return {
-          error: err
+    console.log(context.authenticatedUser);
+
+    context.data.getSingleCourse(this.props.match.params.id)
+      .then(response => {
+        if (response === 'notfound') {
+          this.props.history.push('/notfound');
+        } else {
+          this.setState(() => {
+            return response[0];
+          });
+          if (context.authenticatedUser.userId !== this.state.userId) {
+            this.props.history.push('/forbidden');
+          }
         }
-      });
+    }).catch((err) => {
+      this.props.history.push('/error');
     });
   }
 
+  // Renders course owner
   renderCourseOwner() {
     const { context } = this.props;
 
@@ -38,6 +46,8 @@ export default class CourseDetail extends Component {
       }
     }
   }
+
+  // Renders Validation errors
 
   renderValidationErrorBlock() {
     if (this.state.errors.length) {
@@ -106,6 +116,8 @@ export default class CourseDetail extends Component {
     );
   }
 
+  // Listens to changes in the form element and populates the state with values
+
   change = (event) => {
     const name = event.target.name;
     const value= event.target.value;
@@ -116,6 +128,7 @@ export default class CourseDetail extends Component {
       }
     })
   }
+// Submit method executed at for submition
 
   submit = (event) => {
     event.preventDefault();
@@ -139,8 +152,11 @@ export default class CourseDetail extends Component {
 
     context.data.updateCourse(courseId, course, emailAddress, password)
       .then((response) => {
+        console.log(response);
         if (response === 'success') {
         this.props.history.push('/');
+        } else if (response === 'forbidden') {
+          this.props.history.push('/forbidden');
         } else {
           this.setState(() => { 
             return {
@@ -154,6 +170,8 @@ export default class CourseDetail extends Component {
         this.props.history.push('/error');
       })  
   }
+
+  // Function executed when cancel button is pressed
 
   cancel = () => {
     this.props.history.push('/');

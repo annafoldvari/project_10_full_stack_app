@@ -13,6 +13,8 @@ export default class Courses extends Component {
     }
   }
 
+// Renders validation errors
+
   renderValidationErrorBlock() {
     if (this.state.errors.length) {
       return (
@@ -83,6 +85,9 @@ export default class Courses extends Component {
     );
   }
 
+
+// Listen to changes on form elements and populates the state
+
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -93,6 +98,7 @@ export default class Courses extends Component {
       };
     });
   }
+// Function that executed when form is submitted, creates the course
 
   submit = (event) => {
     event.preventDefault();
@@ -137,6 +143,8 @@ export default class Courses extends Component {
         this.props.history.push('/error'); // push to history stack
       });   
   }
+
+  //Cancels the course creation process and redirects back to course list
 
   cancel = () => {
     this.props.history.push('/');

@@ -11,8 +11,7 @@ export default class UserSignin extends Component {
   render() {
     const {
       emailAddress,
-      password,
-      errors
+      password
     } = this.state;
 
     return (
@@ -40,6 +39,7 @@ export default class UserSignin extends Component {
     );
   }
 
+  // Listen to changes of input elements and populates the state
   change = (event) => {
     const name = event.target.name;
     const value= event.target.value;
@@ -51,6 +51,7 @@ export default class UserSignin extends Component {
     })
   }
 
+  // Function that executed when form submitted
   submit = (event) => {
     event.preventDefault();
     const { context } = this.props;
@@ -72,6 +73,7 @@ export default class UserSignin extends Component {
       })  
   }
 
+  // Cancels the sign in process and redirects back to main course list
   cancel = () => {
     this.props.history.push('/');
   }

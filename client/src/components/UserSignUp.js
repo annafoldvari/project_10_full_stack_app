@@ -11,6 +11,8 @@ export default class UserSignUp extends Component {
     errors: [],
   }
 
+// Renders validation errors
+
   renderValidationErrorBlock() {
     if (this.state.errors.length) {
       return (
@@ -62,6 +64,8 @@ export default class UserSignUp extends Component {
     );
   }
 
+  // Listen to changes on input elements and populates the state
+
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -73,6 +77,7 @@ export default class UserSignUp extends Component {
     });
   }
 
+// Function that executed when form is submitted
   submit = (event) => {
     event.preventDefault();
     const { context } = this.props;
@@ -118,6 +123,7 @@ export default class UserSignUp extends Component {
     }     
   }
 
+// Cancels the sign up process and redirest to course list 
   cancel = () => {
     this.props.history.push('/');
   }

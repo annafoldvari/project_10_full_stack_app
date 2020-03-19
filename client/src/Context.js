@@ -34,7 +34,8 @@ export class Provider extends Component {
     );
   }
 
-  
+  // Signs in user
+
   signIn = async (username, password) => {
     let user = await this.data.getUser(username, password);
     user.password = password;
@@ -50,6 +51,8 @@ export class Provider extends Component {
     return user;
   }
 
+  // Signs out user
+  
   signOut = () => {
     this.setState({ authenticatedUser: null });
     Cookies.remove('authenticatedUser');

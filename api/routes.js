@@ -134,8 +134,7 @@ router.get('/courses/:id', asyncHandler(async (req,res) => {
     },
     attributes: ['id', 'title', 'description', 'estimatedTime', 'materialsNeeded', 'userId'],
   })
-
-  if (course) {
+  if (course.length) {
     res.json(course);
   } else {
     res.status(404).json({message: "Error - course not found"})
@@ -189,13 +188,14 @@ router.put('/courses/:id', authenticateUser, [
     try {
       course = await Course.findByPk(req.params.id);
       const user = req.currentUser;
-      const ownerUser = await User.findByPk(course.userId);
-
-      if (course && user.id === ownerUser.id) {
-        await course.update(req.body);
-        res.status(204).end();
-      } else if (user.id !== ownerUser.id) {
-        res.status(403).json({ message: "Owner doesn't own the requested course" });
+      if (course) {
+        const ownerUser = await User.findByPk(course.userId);
+        if (course && user.id === ownerUser.id) {
+          await course.update(req.body);
+          res.status(204).end();
+        } else if (user.id !== ownerUser.id) {
+          res.status(403).json({ message: "Owner doesn't own the requested course" });
+        }
       } else {
         res.status(404).json({ message: "Error - course not found" });
       }

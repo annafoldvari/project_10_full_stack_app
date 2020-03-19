@@ -11,24 +11,34 @@ export default class CourseDetail extends Component {
       error: ''
     }
   }
+
+  // Individual course is fetched when component is mountes
   
   componentDidMount() {
     const { context } = this.props;
-    context.data.getSingleCourse(this.props.match.params.id).then(course => {
-      this.setState(() => {
-        return {
-          course: course
-        }
+    context.data.getSingleCourse(this.props.match.params.id)
+      .then(
+        response => {
+          console.log(response);
+          if (response === 'notfound') {
+            this.props.history.push('/notfound');
+          } else {
+            this.setState(() => {
+              return {
+                course: response
+              }
+            });
+          } 
+      }).catch((err) => {
+        this.setState(() => {
+          return {
+            error: err
+          }
+        });
       });
-    }).catch((err) => {
-      this.setState(() => {
-        return {
-          error: err
-        }
-      });
-    });
   }
 
+// Update and Delete Buttons are rendered if there is an uthenticated user and the authenticated user is equal with the course owner  
   renderButtons() {
     const { context } = this.props;
 
@@ -40,6 +50,9 @@ export default class CourseDetail extends Component {
       }
     }  
   }
+
+
+// Deletes course
 
   delete = () => {
     const { context } = this.props;
@@ -56,6 +69,8 @@ export default class CourseDetail extends Component {
         this.props.history.push('/error');
       })
   }
+
+  // Renders course owner if the course owner is equal with the authenticated user
 
   renderCourseOwner() {
     const { context } = this.props;
