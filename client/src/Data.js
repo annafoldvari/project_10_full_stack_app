@@ -41,7 +41,7 @@ export default class Data {
   async createUser(user) {
     const response = await this.api('/users', 'POST', user);
     if (response.status === 201) {
-      return [];
+      return 'success';
     }
     else if (response.status === 400) {
       return response.json().then(data => {

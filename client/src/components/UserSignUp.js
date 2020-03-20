@@ -58,7 +58,7 @@ export default class UserSignUp extends Component {
             </form>
           </div>
           <p>&nbsp;</p>
-          <p>Already have a user account? <Link to="/singin">Click here</Link> to sign in!</p>
+          <p>Already have a user account? <Link to="/signin">Click here</Link> to sign in!</p>
         </div>
       </div>
     );
@@ -103,17 +103,17 @@ export default class UserSignUp extends Component {
       };
 
       context.data.createUser(user)
-        .then( errors => {
-          if (errors.message.length) {
-            console.log(errors)
-            this.setState(() => {
-              return { errors: errors.message }
-            });
-          } else {
+        .then( response => {
+          if (response === 'success') {
             context.actions.signIn(emailAddress, password)
-              .then(() => {
-                this.props.history.push('/');
-              })
+            .then(() => {
+              this.props.history.push('/');
+            })
+          } else if (response.message.length) {
+            console.log(response)
+            this.setState(() => {
+              return { errors: response.message }
+            });
           }
         })
         .catch( err => { // handle rejected promises
