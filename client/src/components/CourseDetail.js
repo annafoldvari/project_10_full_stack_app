@@ -19,7 +19,6 @@ export default class CourseDetail extends Component {
     context.data.getSingleCourse(this.props.match.params.id)
       .then(
         response => {
-          console.log(response);
           if (response === 'notfound') {
             this.props.history.push('/notfound');
           } else {

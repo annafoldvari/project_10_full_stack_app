@@ -89,7 +89,10 @@ router.post('/users', asyncHandler(async (req, res, next) => {
   let user
   console.log(req.body);
   try {
-    req.body.password = bcryptjs.hashSync(req.body.password);
+    // Don't hash empty password so it's reported as an error
+    if (req.body.password) {
+      req.body.password = bcryptjs.hashSync(req.body.password);
+    }
     user = await User.create(req.body);
     res.status(201).location("/").end();
   } catch (error) {

@@ -17,7 +17,6 @@ export default class CourseDetail extends Component {
   // Getting the the course details for the update
   componentDidMount() {
     const { context } = this.props;
-    console.log(context.authenticatedUser);
 
     context.data.getSingleCourse(this.props.match.params.id)
       .then(response => {
@@ -152,7 +151,6 @@ export default class CourseDetail extends Component {
 
     context.data.updateCourse(courseId, course, emailAddress, password)
       .then((response) => {
-        console.log(response);
         if (response === 'success') {
         this.props.history.push('/');
         } else if (response === 'forbidden') {
@@ -173,7 +171,9 @@ export default class CourseDetail extends Component {
 
   // Function executed when cancel button is pressed
 
-  cancel = () => {
-    this.props.history.push('/');
+  cancel = (event) => {
+    event.preventDefault();
+    const courseId = this.props.match.params.id;
+    this.props.history.push(`/courses/${courseId}`);
   }
 }   

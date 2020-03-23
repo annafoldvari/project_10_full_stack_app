@@ -127,7 +127,6 @@ export default class Courses extends Component {
 
     context.data.createCourse(course, emailAddress, password)
       .then( response => {
-        console.log(response);
         if (response === 'success') {
           this.props.history.push('/');
         } else {

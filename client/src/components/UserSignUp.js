@@ -83,7 +83,9 @@ export default class UserSignUp extends Component {
     const { context } = this.props;
 
     if (this.state.password !== this.state.confirmPassword ) {
-      this.setState({ errors: ["Passwords don't match."] });
+      this.setState( {
+        errors: [ "Password don't match." ]
+      });
       return;
     } else {
 
@@ -110,7 +112,6 @@ export default class UserSignUp extends Component {
               this.props.history.push('/');
             })
           } else if (response.message.length) {
-            console.log(response)
             this.setState(() => {
               return { errors: response.message }
             });

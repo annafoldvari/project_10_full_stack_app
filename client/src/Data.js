@@ -47,8 +47,7 @@ export default class Data {
       return response.json().then(data => {
         return data;
       });
-    }
-    else {
+    } else {
       throw new Error();
     }
   } 
