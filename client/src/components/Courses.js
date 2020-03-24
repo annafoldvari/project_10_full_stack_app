@@ -22,6 +22,10 @@ export default class Courses extends Component {
           courses: courses
         }
       });
+    })
+    .catch( err => {
+      console.log(err);
+      this.props.history.push('/error');
     });
   } 
 

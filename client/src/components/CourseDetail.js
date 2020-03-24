@@ -29,11 +29,8 @@ export default class CourseDetail extends Component {
             });
           } 
       }).catch((err) => {
-        this.setState(() => {
-          return {
-            error: err
-          }
-        });
+        console.log(err);
+        this.props.history.push('/error');
       });
   }
 
